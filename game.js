@@ -9,16 +9,24 @@ const losingAudio = document.querySelector(".losing-audio")
 const clickAudio = document.querySelector(".click-audio")
 //! audio button
 const audioBtn = document.querySelector("#audio-btn")
+console.log(audioBtn.classList.contains("music"))
 
 audioBtn.addEventListener("click", ()=>{
-    soundtrack.play()
-    audioBtn.innerHTML = `<i class="fa-solid fa-volume-high text-white music"></i>`
+    
+    if(audioBtn.firstElementChild.classList.contains("off")){
+        soundtrack.play()
+        audioBtn.innerHTML = `<i class="fa-solid fa-volume-high text-white music on"></i>`
+    }else{
+        soundtrack.pause()
+        audioBtn.innerHTML = `<i class="fa-solid fa-volume-xmark text-white music off"></i>`
+    }
+   
 
 })
 //? 1-100 arasinda bir sayi tut
 const randomNumber =()=>{ return Math.round(Math.random() * 100 + 1)}
 let scrtNumber = randomNumber()
- console.log(scrtNumber)
+console.log(scrtNumber)
 
 let score = 10
 let topScore = 0
@@ -44,11 +52,13 @@ document.querySelector(".check-btn").addEventListener("click", ()=>{
         if(score > 0){
 
         guessInput > scrtNumber 
-        ? (msg.innerHTML = `<i class="fa-solid fa-arrow-trend-down fa-2x"></i> DECREASE`)
-        : (msg.innerHTML = `<i class="fa-solid fa-arrow-trend-up fa-2x"></i> INCREASE`)
+        ? (msg.innerHTML = `<i class="fa-solid fa-arrow-trend-down fa-2x"></i> DECREASE`, document.querySelector(".guess-input").value = "")
+        : (msg.innerHTML = `<i class="fa-solid fa-arrow-trend-up fa-2x"></i> INCREASE`, document.querySelector(".guess-input").value = "")
     }else {
         msg.innerText = "You Lost"
         document.body.className = "bg-danger"
+        audioBtn.classList.add("bg-danger")
+        audioBtn.firstElementChild.classList.add("bg-danger")
         losingAudio.play()
         document.querySelector(".check-btn").disabled = true
         

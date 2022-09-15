@@ -23,6 +23,7 @@ body {
 .music{
   font-size: 2rem;
   background-color: #2d3436;
+  border: none;
 }
 
 .secret-number,
